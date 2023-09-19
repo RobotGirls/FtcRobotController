@@ -21,6 +21,10 @@ android {
         main.java.srcDirs += '../../FTC-Team-25/2023'
     }
     namespace = 'org.firstinspires.ftc.teamcode'
+
+    packagingOptions {
+        jniLibs.useLegacyPackaging true
+    }
 }
 
 dependencies {
