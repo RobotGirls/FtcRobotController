@@ -18,7 +18,7 @@ apply from: '../build.dependencies.gradle'
 android {
     sourceSets {
         main.java.srcDirs += '../../terkel/java'
-        main.java.srcDirs += '../../FTC-Team-25/2023'
+        main.java.srcDirs += '../../FTC-Team-25/2024'
     }
     namespace = 'org.firstinspires.ftc.teamcode'
 
