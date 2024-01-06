@@ -57,8 +57,10 @@ public class DriveConstants {
      *   6000 / 18.9 = 317.4 RPM
      *   28 * 18.9 = 529.2 Ticks per shaft revolution
      */
-    public static double TICKS_PER_REV = 529.2;
-    public static double MAX_RPM = 317.4;
+
+    // RNRR changed this for our robot
+    public static double TICKS_PER_REV = 840;
+    public static double MAX_RPM = 225;
 
     /*
      * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.

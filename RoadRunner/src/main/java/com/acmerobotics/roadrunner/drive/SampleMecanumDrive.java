@@ -52,6 +52,8 @@ import static com.acmerobotics.roadrunner.drive.DriveConstants.kA;
 import static com.acmerobotics.roadrunner.drive.DriveConstants.kStatic;
 import static com.acmerobotics.roadrunner.drive.DriveConstants.kV;
 
+
+
 /*
  * Simple mecanum drive hardware implementation for REV hardware.
  */
@@ -136,6 +138,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         rightRear = hardwareMap.get(DcMotorEx.class, DriveConstants.RIGHT_REAR);
         rightFront = hardwareMap.get(DcMotorEx.class, DriveConstants.RIGHT_FRONT);
 
+
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
         for (DcMotorEx motor : motors) {
@@ -155,10 +158,10 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
