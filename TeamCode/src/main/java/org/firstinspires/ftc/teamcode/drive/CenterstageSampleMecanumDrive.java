@@ -1,5 +1,4 @@
-
-package opmodes;
+package org.firstinspires.ftc.teamcode.drive;
 
 import androidx.annotation.NonNull;
 
@@ -56,7 +55,7 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
  * Simple mecanum drive hardware implementation for REV hardware.
  */
 @Config
-public class SampleMecanumDrive extends MecanumDrive {
+public class CenterstageSampleMecanumDrive extends MecanumDrive {
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(5.5, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(3, 0, 0);
 
@@ -136,6 +135,10 @@ public class SampleMecanumDrive extends MecanumDrive {
                 follower, HEADING_PID, batteryVoltageSensor,
                 lastEncPositions, lastEncVels, lastTrackingEncPositions, lastTrackingEncVels
         );
+    }
+
+    public CenterstageSampleMecanumDrive(double kV, double kA, double kStatic, double trackWidth, double wheelBase) {
+        super(kV, kA, kStatic, trackWidth, wheelBase);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
