@@ -25,6 +25,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
@@ -72,6 +73,14 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
 
     private TrajectoryFollower follower;
 
+    private DcMotor intake;
+    private DcMotor linearLift;
+    private Servo box;
+    private Servo pixelRelease;
+
+    private final double BLOCK_NOTHING = 0.05;
+    private final double BLOCK_BOTH = 0.8;
+
     private DcMotorEx leftFront, leftRear, rightRear, rightFront;
     private List<DcMotorEx> motors;
 
@@ -100,8 +109,28 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
         rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
 
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        intake=hardwareMap.get(DcMotor.class, "outtake");
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // flip mechanism
+        box = hardwareMap.servo.get("pixelBox");
+        box.setPosition(0.1);
+
+        // pixel release mechanism (mounted on box)
+        pixelRelease = hardwareMap.servo.get("pixelRelease");
+        pixelRelease.setPosition(BLOCK_BOTH);
+
+        linearLift = hardwareMap.get(DcMotor.class, "linearLift");
+        linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        linearLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
