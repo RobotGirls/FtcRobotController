@@ -23,7 +23,6 @@ public class DriveConstants {
      */
     public static final double TICKS_PER_REV = 840;
     public static final double MAX_RPM = 220;
-
     /*
      * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.
      * Set this flag to false if drive encoders are not present and an alternative localization
@@ -35,7 +34,6 @@ public class DriveConstants {
     public static final boolean RUN_USING_ENCODER = false;
     public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
             getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
-
     /*
      * These are physical constants that can be determined from your robot (including the track
      * width; it will be tune empirically later although a rough estimate is important). Users are
@@ -46,7 +44,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 2; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 10.78; // in
+    public static double TRACK_WIDTH = 12.64; // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -60,12 +58,9 @@ public class DriveConstants {
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
-     * the constraints should never exceed ~80% of the robot's actual capabilities. While Road
-     * Runner is designed to enable faster autonomous motion, it is a good idea for testing to start
-     * small and gradually increase them later after everything is working. All distance units are
-     * inches.
+	@@ -67,7 +67,7 @@ public class DriveConstants {
      */
-    public static double MAX_VEL = 30;
+    public static double MAX_VEL = 62.17158152898318;
     public static double MAX_ACCEL = 30;
     public static double MAX_ANG_VEL = 2.5054203033447267; //Math.toRadians(60);
     public static double MAX_ANG_ACCEL = Math.toRadians(60);
