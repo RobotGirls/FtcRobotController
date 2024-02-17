@@ -51,10 +51,10 @@ import team25core.TwoStickMechanumControlScheme;
 @TeleOp(name = "TestRig4 TeleOp 2", group="Centerstage")
 public class CenterstageTeleopTest extends StandardFourMotorRobot {
 
-    private static final int CLAW_MAX = 284;
-    private static final int CLAW_MIN = 4;
-    private static final int INTAKE_MIN = 4;
-    private static final int INTAKE_MAX = 140;
+    private static final int CLAW_MAX = 260;
+    private static final int CLAW_MIN = 2;
+    private static final int INTAKE_MIN = 2;
+    private static final int INTAKE_MAX = 142;
 
     private TeleopDriveTask drivetask;
 
