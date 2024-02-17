@@ -59,8 +59,8 @@ public class CenterstageTeleop extends StandardFourMotorRobot {
 
     ClawState clawPosition = ClawState.CLAW_CLOSED;
 
-    private static final int CLAW_LIMIT = 288;
-    private static final int INTAKE_TOP = 0;
+    private static final int CLAW_LIMIT = 284;
+    private static final int INTAKE_TOP = 4;
     private static final int INTAKE_ALIGN = 108;
     private static final int INTAKE_BOTTOM = 144;
 
