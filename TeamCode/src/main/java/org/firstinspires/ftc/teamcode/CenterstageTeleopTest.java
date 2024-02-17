@@ -51,6 +51,11 @@ import team25core.TwoStickMechanumControlScheme;
 @TeleOp(name = "TestRig4 TeleOp 2", group="Centerstage")
 public class CenterstageTeleopTest extends StandardFourMotorRobot {
 
+    private static final int CLAW_MAX = 284;
+    private static final int CLAW_MIN = 4;
+    private static final int INTAKE_MIN = 4;
+    private static final int INTAKE_MAX = 140;
+
     private TeleopDriveTask drivetask;
 
     private DcMotor claw;
@@ -88,8 +93,8 @@ public class CenterstageTeleopTest extends StandardFourMotorRobot {
 
         claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        claw.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        claw.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // for AndyMark motors, reverse the right-hand motors
         drivetrain.setCanonicalMotorDirection();
@@ -98,7 +103,7 @@ public class CenterstageTeleopTest extends StandardFourMotorRobot {
         drivetrain.encodersOn();
 
         // left stick translation, right stick turning control scheme
-        TwoStickMechanumControlScheme scheme = new TwoStickMechanumControlScheme(gamepad1);
+        TwoStickMechanumControlScheme scheme = new TwoStickMechanumControlScheme(gamepad1, TwoStickMechanumControlScheme.StickOrientation.TRANSLATE_ON_RIGHT);
 
         drivetask = new TeleopDriveTask(this, scheme, frontLeft, frontRight, backLeft, backRight);
         // default to slow driving
@@ -124,11 +129,6 @@ public class CenterstageTeleopTest extends StandardFourMotorRobot {
     @Override
     public void start() {
 
-        ptt.addData("claw current", claw.getCurrentPosition());
-        ptt.addData("intake current", intake.getCurrentPosition());
-
-        this.addTask(ptt);
-
         //Gamepad 1
         this.addTask(drivetask);
 
@@ -144,24 +144,24 @@ public class CenterstageTeleopTest extends StandardFourMotorRobot {
                         drivetask.slowDown(true);
                         break;
                     case BUTTON_A_DOWN:
-                        intake.setPower(0.5);
+                        if (intake.getCurrentPosition() < INTAKE_MAX) intake.setPower(0.5);
+                        break;
+                    case BUTTON_B_DOWN:
+                        if (intake.getCurrentPosition() > INTAKE_MIN) intake.setPower(-0.5);
                         break;
                     case BUTTON_A_UP:
                     case BUTTON_B_UP:
                         intake.setPower(0);
                         break;
-                    case BUTTON_B_DOWN:
-                        intake.setPower(-0.5);
-                        break;
                     case BUTTON_X_DOWN:
-                        claw.setPower(-0.5);
+                        if (claw.getCurrentPosition() > CLAW_MIN) claw.setPower(-0.4);
+                        break;
+                    case BUTTON_Y_DOWN:
+                        if (claw.getCurrentPosition() < CLAW_MAX) claw.setPower(0.4);
                         break;
                     case BUTTON_X_UP:
                     case BUTTON_Y_UP:
                         claw.setPower(0);
-                        break;
-                    case BUTTON_Y_DOWN:
-                        claw.setPower(0.5);
                         break;
                     default:
                         break;

@@ -149,7 +149,7 @@ public class CenterstageTeleop extends StandardFourMotorRobot {
         drivetrain.encodersOn();
 
         // left stick translation, right stick turning control scheme
-        TwoStickMechanumControlScheme scheme = new TwoStickMechanumControlScheme(gamepad1);
+        TwoStickMechanumControlScheme scheme = new TwoStickMechanumControlScheme(gamepad1, TwoStickMechanumControlScheme.StickOrientation.TRANSLATE_ON_RIGHT);
 
         drivetask = new TeleopDriveTask(this, scheme, frontLeft, frontRight, backLeft, backRight);
         // default to slow driving
