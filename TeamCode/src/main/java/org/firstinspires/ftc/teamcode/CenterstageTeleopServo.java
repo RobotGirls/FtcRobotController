@@ -34,26 +34,21 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
-//import org.firstinspires.ftc.robotcore.external.telemetry;
 
 import team25core.GamepadTask;
 import team25core.MechanumGearedDrivetrain;
 import team25core.PersistentTelemetryTask;
 import team25core.RobotEvent;
 import team25core.StandardFourMotorRobot;
-import team25core.TwoStickMechanumControlScheme;
 import team25core.TeleopDriveTask;
+import team25core.TwoStickMechanumControlScheme;
 
-@TeleOp(name = "TestRig4 TeleOp", group="Centerstage")
-@Disabled
-public class CenterstageTeleop extends StandardFourMotorRobot {
+@TeleOp(name = "TestRig4 TeleOp Servo", group="Centerstage")
+public class CenterstageTeleopServo extends StandardFourMotorRobot {
 
     public enum ClawState {
         CLAW_OPEN,
@@ -62,17 +57,28 @@ public class CenterstageTeleop extends StandardFourMotorRobot {
 
     ClawState clawPosition = ClawState.CLAW_CLOSED;
 
-    private static final int CLAW_LIMIT = 260;
-    private static final int INTAKE_TOP = 2;
-    private static final int INTAKE_ALIGN = 108;
-    private static final int INTAKE_BOTTOM = 144;
+    private static final int CLAW_MIN = 3;
+    private static final int CLAW_MAX = 260;
+    private static final double INTAKE_TOP = 0.05;
+    private static final double INTAKE_ALIGN = 0.65;
+    private static final double INTAKE_BOTTOM = 0.75;
+
+    private static final double WRIST_MIN = 0.25;
+
+    private static final double WRIST_MAX = 0.75;
+
+    private static final int ARM_MIN = 0;
+
+    private static final int ARM_VERTICAL = 144;
+
+    private static final int ARM_BACK = 288;
 
 
     private TeleopDriveTask drivetask;
 
     private DcMotor claw;
-    private DcMotor intake;
-//    private DcMotor arm;
+    private Servo intake;
+    private DcMotor arm;
 
     private Servo wrist;
     IMU imu;
@@ -99,11 +105,11 @@ public class CenterstageTeleop extends StandardFourMotorRobot {
     public void toggleClaw() {
         switch (clawPosition) {
             case CLAW_OPEN:
-                claw.setTargetPosition(0);
+                claw.setTargetPosition(CLAW_MIN);
                 clawPosition = ClawState.CLAW_CLOSED;
                 break;
             case CLAW_CLOSED:
-                claw.setTargetPosition(CLAW_LIMIT);
+                claw.setTargetPosition(CLAW_MAX);
                 clawPosition = ClawState.CLAW_OPEN;
             break;
             default:
@@ -128,21 +134,17 @@ public class CenterstageTeleop extends StandardFourMotorRobot {
         drivetrain = new MechanumGearedDrivetrain(motorMap);
         
         claw = hardwareMap.get(DcMotor.class, "claw");
-        intake = hardwareMap.get(DcMotor.class, "intake");
-//        arm = hardwareMap.get(DcMotor.class, "arm");
+        intake = hardwareMap.get(Servo.class, "intakeServo");
+        arm = hardwareMap.get(DcMotor.class, "arm");
 
         wrist = hardwareMap.get(Servo.class,"wrist");
 
-//        intake.setDirection(DcMotorSimple.Direction.REVERSE);
+//        intake.setDirection(Servo.Direction.REVERSE);
 
         claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        claw.setTargetPosition(0);
-        intake.setTargetPosition(0);
+        claw.setTargetPosition(CLAW_MIN);
         resetMotorPosition(claw, DcMotor.RunMode.RUN_TO_POSITION);
-        resetMotorPosition(intake, DcMotor.RunMode.RUN_TO_POSITION);
 //        claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
         // for AndyMark motors, reverse the right-hand motors
@@ -179,7 +181,6 @@ public class CenterstageTeleop extends StandardFourMotorRobot {
     public void start() {
 
         claw.setPower(0.4);
-        intake.setPower(0.6);
 
         //Gamepad 1
         this.addTask(drivetask);
@@ -198,15 +199,15 @@ public class CenterstageTeleop extends StandardFourMotorRobot {
                         telemetry.addData("speed","slow");
                         break;
                     case BUTTON_Y_DOWN:
-                        intake.setTargetPosition(INTAKE_TOP);
+                        intake.setPosition(INTAKE_TOP);
                         telemetry.addData("intake","top");
                         break;
                     case BUTTON_B_DOWN:
-                        intake.setTargetPosition(INTAKE_ALIGN);
+                        intake.setPosition(INTAKE_ALIGN);
                         telemetry.addData("intake","align");
                         break;
                     case BUTTON_A_DOWN:
-                        intake.setTargetPosition(INTAKE_BOTTOM);
+                        intake.setPosition(INTAKE_BOTTOM);
                         telemetry.addData("intake","bottom");
                         break;
                     case LEFT_BUMPER_DOWN:
