@@ -20,7 +20,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += '../../terkel/java'
-        main.java.srcDirs += '../../FTC-Testing'
+        main.java.srcDirs += '../../FTC-Testing/2024/'
     }
 
     packagingOptions {
