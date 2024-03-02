@@ -79,12 +79,13 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
     public DcMotor linearLift;
     public Servo box;
     public Servo pixelRelease;
+    public Servo purple;
 
     public Rev2mDistanceSensor distanceSensor1;
     public Rev2mDistanceSensor distanceSensor2;
 
 
-    private final double BLOCK_NOTHING = 0.05;
+    private final double BLOCK_NOTHING = 0.2;
     private final double BLOCK_BOTH = 0.8;
 
     private DcMotorEx leftFront, leftRear, rightRear, rightFront;
@@ -138,11 +139,15 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // flip mechanism
         box = hardwareMap.servo.get("pixelBox");
-        box.setPosition(0.1);
+        box.setPosition(0.8);
 
         // pixel release mechanism (mounted on box)
         pixelRelease = hardwareMap.servo.get("pixelRelease");
-        pixelRelease.setPosition(BLOCK_BOTH);
+        pixelRelease.setPosition(0.8);
+
+        // purple pixel releaser
+        purple = hardwareMap.servo.get("purplePixel");
+        purple.setPosition(0.225);
 
         linearLift = hardwareMap.get(DcMotor.class, "linearLift");
         linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
