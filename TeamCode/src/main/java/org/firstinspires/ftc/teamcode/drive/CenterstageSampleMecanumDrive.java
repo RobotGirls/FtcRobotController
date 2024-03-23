@@ -20,6 +20,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityCons
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -59,8 +60,8 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
  */
 @Config
 public class CenterstageSampleMecanumDrive extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(7, 0, 0);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(9, 0, 0);
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0); // 7
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(11, 0, 0); // 9
 
     public static double LATERAL_MULTIPLIER = 1;
 
@@ -80,12 +81,19 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
     public Servo box;
     public Servo pixelRelease;
     public Servo purple;
+    public Servo linkage;
 
     public Rev2mDistanceSensor distanceSensor1;
     public Rev2mDistanceSensor distanceSensor2;
 
+    public ColorSensor colorSensor;
     public static double FLIP_UP = 0.4;
     public static double FLIP_DOWN = 0.85;
+
+    public static double LINKAGE_UP = 0.65;
+    public static double LINKAGE_DOWN = 0.2;
+    public static double LINKAGE_ONE_PIXEL = 0.4;
+    public static double LINKAGE_TWO_PIXELS = 0.3;
 
     public static double BLOCK_PIXELS = 0.05;
     public static double RELEASE_PIXELS = 0.4;
@@ -103,7 +111,7 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
+                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.2); // was 0.5 but test accuracy with 0.2
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
@@ -151,6 +159,9 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
         purple = hardwareMap.servo.get("purplePixel");
         purple.setPosition(0.22);
 
+        linkage = hardwareMap.servo.get("linkage");
+        linkage.setPosition(0.4);
+
         linearLift = hardwareMap.get(DcMotor.class, "linearLift");
         linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -158,6 +169,8 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
 
         distanceSensor1 = hardwareMap.get(Rev2mDistanceSensor.class, "distancesensor1"); // left
         distanceSensor2 = hardwareMap.get(Rev2mDistanceSensor.class, "distancesensor2"); // right
+
+        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
