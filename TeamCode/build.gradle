@@ -18,6 +18,11 @@ apply from: '../build.dependencies.gradle'
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
 
+    sourceSets {
+        main.java.srcDirs += '../../terkel/java'
+        main.java.srcDirs += '../../FTC-Testing/2024/'
+    }
+
     packagingOptions {
         jniLibs.useLegacyPackaging true
     }
