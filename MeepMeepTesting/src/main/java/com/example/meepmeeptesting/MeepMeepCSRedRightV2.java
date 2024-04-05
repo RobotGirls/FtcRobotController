@@ -5,7 +5,7 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class MeepMeepCSRedRight {
+public class MeepMeepCSRedRightV2 {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
@@ -37,7 +37,7 @@ public class MeepMeepCSRedRight {
 
                                 // RIGHT SPIKE
 
-                                .forward(32)
+                                .forward(27)
                                 .turn(Math.toRadians(-90))
                                 .forward(-3)
                                 .strafeRight(25)

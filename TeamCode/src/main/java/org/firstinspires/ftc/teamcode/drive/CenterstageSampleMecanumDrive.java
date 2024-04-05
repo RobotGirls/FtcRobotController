@@ -60,10 +60,10 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
  */
 @Config
 public class CenterstageSampleMecanumDrive extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0); // 7
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(11, 0, 0); // 9
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(15, 0, 0);
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(17, 0, 0); // 7
 
-    public static double LATERAL_MULTIPLIER = 1.052;
+    public static double LATERAL_MULTIPLIER = 1.020689;
 
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
@@ -87,10 +87,10 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
     public Rev2mDistanceSensor distanceSensor2;
 
     public ColorSensor colorSensor;
-    public static double FLIP_UP = 0.4;
+    public static double FLIP_UP = 0.465;
     public static double FLIP_DOWN = 0.85;
 
-    public static double LINKAGE_UP = 0.65;
+    public static double LINKAGE_UP = 0.9;
     public static double LINKAGE_DOWN = 0.2;
     public static double LINKAGE_ONE_PIXEL = 0.4;
     public static double LINKAGE_TWO_PIXELS = 0.3;
@@ -160,7 +160,7 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
         purple.setPosition(0.22);
 
         linkage = hardwareMap.servo.get("linkage");
-        linkage.setPosition(0.4);
+        linkage.setPosition(0.7);
 
         linearLift = hardwareMap.get(DcMotor.class, "linearLift");
         linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
