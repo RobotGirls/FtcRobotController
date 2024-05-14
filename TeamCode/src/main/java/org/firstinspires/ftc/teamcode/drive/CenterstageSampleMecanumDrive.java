@@ -56,7 +56,7 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 
 /*
- * Simple mecanum drive hardware implementation for REV hardware.
+ * constants for rnrr 2023-24 robot
  */
 @Config
 public class CenterstageSampleMecanumDrive extends MecanumDrive {
@@ -87,8 +87,8 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
     public Rev2mDistanceSensor distanceSensor2;
 
     public ColorSensor colorSensor;
-    public static double FLIP_UP = 0.465;
-    public static double FLIP_DOWN = 0.85;
+    public static double FLIP_UP = 0.43;
+    public static double FLIP_DOWN = 0.89;
 
     public static double LINKAGE_UP = 0.9;
     public static double LINKAGE_DOWN = 0.2;
@@ -97,6 +97,8 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
 
     public static double BLOCK_PIXELS = 0.05;
     public static double RELEASE_PIXELS = 0.4;
+
+    public static double STACK_TIMEOUT = 8;
 
     private DcMotorEx leftFront, leftRear, rightRear, rightFront;
     private List<DcMotorEx> motors;
@@ -157,7 +159,7 @@ public class CenterstageSampleMecanumDrive extends MecanumDrive {
 
         // purple pixel releaser
         purple = hardwareMap.servo.get("purplePixel");
-        purple.setPosition(0.22);
+        purple.setPosition(0.25);
 
         linkage = hardwareMap.servo.get("linkage");
         linkage.setPosition(0.7);
