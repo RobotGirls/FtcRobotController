@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 include ':FtcRobotController'
 include ':TeamCode'
 include ':MeepMeepTesting'
+include ':RoadRunner'
